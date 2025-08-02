@@ -1,0 +1,23 @@
+[33mcommit c9636d3d8629566674d49afe67c2115169b98016[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Francis <francmaki14@gmail.com>
+Date:   Sat Aug 2 23:33:01 2025 +0300
+
+    create backend project
+
+[33mcommit d7c0d72e712d9b8bddd70a877853f04436c91841[m
+Author: Francis <francmaki14@gmail.com>
+Date:   Sat Aug 2 23:27:42 2025 +0300
+
+    install required backend packages:
+    django (Core framework)
+    djangorestframework (REST APIs)
+    django-cors-headers (Allow cross-origin requests from frontend)
+    psycopg2-binary (PostgreSQL)
+    python-decouple (Load .env for secrets/configs)
+    celery (For async tasks)
+
+[33mcommit 33ac67bf23dc8b0b388077283dccd17c79fa45fd[m
+Author: Francis <francmaki14@gmail.com>
+Date:   Sat Aug 2 22:06:02 2025 +0300
+
+    create a virtual environment
