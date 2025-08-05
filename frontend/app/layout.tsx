@@ -1,31 +1,44 @@
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import './globals.css'
+import type React from "react"
+import type { Metadata } from "next"
+import { Inter } from "next/font/google"
+import "./globals.css"
+import { ClerkProvider } from "@clerk/nextjs"
+import { NotificationProvider } from "@/components/providers/notification-provider"
+import { Toaster } from "@/components/ui/toaster"
+
+const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: 'KiliAgents',
-  description: 'AI-Powered Multi-Agent Platform for Smarter Communities',
-  generator: 'KiliAgents',
+  title: "KiliAgents - Smart Community Platform",
+  description: "AI-powered multi-agent platform for smarter communities",
+    generator: 'v0.dev'
 }
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <style>{`
-html {
-  font-family: ${GeistSans.style.fontFamily};
-  --font-sans: ${GeistSans.variable};
-  --font-mono: ${GeistMono.variable};
-}
-        `}</style>
-      </head>
-      <body>{children}</body>
-    </html>
+    <ClerkProvider
+      appearance={{
+        variables: {
+          colorPrimary: "#2563eb",
+          colorBackground: "#ffffff",
+          colorInputBackground: "#ffffff",
+          colorInputText: "#1f2937",
+          borderRadius: "0.75rem",
+        },
+      }}
+    >
+      <html lang="en">
+        <body className={inter.className}>
+          <NotificationProvider>
+            {children}
+            <Toaster />
+          </NotificationProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

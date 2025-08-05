@@ -189,7 +189,13 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Open source contributors and maintainers
 - AI and machine learning research community
 
+## 📞 Support
 
+For support and questions:
+- **Email**: support@kiliagents.com
+- **Documentation**: [docs.kiliagents.com](https://docs.kiliagents.com)
+- **Community Forum**: [community.kiliagents.com](https://community.kiliagents.com)
+- **Issue Tracker**: [GitHub Issues](https://github.com/your-org/kiliagents-platform/issues)
 
 ---
 
