@@ -2,7 +2,12 @@ import { DashboardLayout } from "@/components/dashboard/dashboard-layout"
 import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { MetricsOverview } from "@/components/dashboard/metrics-overview"
 import { AgentStatusGrid } from "@/components/dashboard/agent-status-grid"
-import { CommunityMap } from "@/components/dashboard/community-map"
+import dynamic from 'next/dynamic';
+
+const CommunityMap = dynamic(() => import('@/components/dashboard/community-map').then(mod => mod.CommunityMap), {
+  ssr: false,
+  loading: () => <p>Loading map...</p>,
+});
 import { RecentActivity } from "@/components/dashboard/recent-activity"
 import { IssueTracker } from "@/components/dashboard/issue-tracker"
 

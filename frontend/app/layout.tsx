@@ -4,14 +4,14 @@ import { Inter } from "next/font/google"
 import "./globals.css"
 import { ClerkProvider } from "@clerk/nextjs"
 import { NotificationProvider } from "@/components/providers/notification-provider"
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from 'react-hot-toast';
 
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
   title: "KiliAgents - Smart Community Platform",
   description: "AI-powered multi-agent platform for smarter communities",
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
