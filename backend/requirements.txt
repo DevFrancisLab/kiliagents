@@ -8,6 +8,8 @@ click-plugins==1.1.1.2
 click-repl==0.3.0
 Django==4.2.13
 django-cors-headers==4.7.0
+django-cors-whitenoise==6.7.0
+requests==2.31.0
 djangorestframework==3.16.0
 Pillow==10.0.0
 kombu==5.5.4

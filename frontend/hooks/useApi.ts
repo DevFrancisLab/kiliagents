@@ -32,10 +32,13 @@ export function useApi() {
     return apiFetch('/issues/');
   }, [apiFetch]);
 
-  const submitIssue = useCallback((formData: FormData) => {
+  const submitIssue = useCallback((issueData: { description: string; category: string; latitude: number; longitude: number; place_name: string; }) => {
     return apiFetch('/issues/', {
       method: 'POST',
-      body: formData,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(issueData),
     });
   }, [apiFetch]);
 

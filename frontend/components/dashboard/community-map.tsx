@@ -64,16 +64,17 @@ export function CommunityMap() {
       return;
     }
 
-    const formData = new FormData();
-    formData.append('latitude', newIssueLocation.lat.toString());
-    formData.append('longitude', newIssueLocation.lng.toString());
-    formData.append('description', description);
-    formData.append('category', category);
-    if (placeName) formData.append('place_name', placeName);
-    if (proof) formData.append('proof', proof);
+    const issueData = {
+      latitude: newIssueLocation.lat,
+      longitude: newIssueLocation.lng,
+      description,
+      category,
+      place_name: placeName || `Approx. ${newIssueLocation.lat.toFixed(4)}, ${newIssueLocation.lng.toFixed(4)}`,
+      // proof submission would require a separate multipart/form-data upload endpoint
+    };
 
     try {
-      const newIssue = await submitIssue(formData);
+      const newIssue = await submitIssue(issueData);
       setIssues(prevIssues => [...prevIssues, newIssue]);
       toast.success("Your report has been received.");
       setNewIssueLocation(null);

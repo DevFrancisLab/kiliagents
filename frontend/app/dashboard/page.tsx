@@ -10,6 +10,7 @@ const CommunityMap = dynamic(() => import('@/components/dashboard/community-map'
 });
 import { RecentActivity } from "@/components/dashboard/recent-activity"
 import { IssueTracker } from "@/components/dashboard/issue-tracker"
+import IssueReporter from "@/components/dashboard/IssueReporter";
 
 export default function DashboardPage() {
   return (
@@ -32,6 +33,9 @@ export default function DashboardPage() {
           
           {/* Right Column: Activity Feed & Issue Tracker */}
           <div className="space-y-6 flex flex-col">
+            <div className="flex-none mb-6">
+              <IssueReporter />
+            </div>
             <div className="flex-1">
               <RecentActivity />
             </div>
