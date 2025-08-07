@@ -5,7 +5,8 @@ from .views import (
     SignupView,
     MeView,
     UserListView,
-    CustomTokenObtainPairView,  # import your custom view
+    CustomTokenObtainPairView,  # custom login view returning extra user data
+    LogoutView,  # blacklists refresh token
 )
 
 urlpatterns = [
@@ -13,7 +14,8 @@ urlpatterns = [
     path('me/', MeView.as_view(), name='me'),
     path('users/', UserListView.as_view(), name='user-list'),
 
-    # Use custom login view to return username, role, etc.
+    # JWT authentication endpoints
     path('login/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]
