@@ -1,21 +1,21 @@
 from django.db import models
-from users.models import CustomUser  # optional relation to a user
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 class Report(models.Model):
     CATEGORY_CHOICES = [
-        ('electricity', 'Electricity'),
-        ('water', 'Water'),
+        ('environment', 'Environmental'),
         ('security', 'Security'),
+        ('maintenance', 'Maintenance'),
         ('other', 'Other'),
     ]
 
-    title = models.CharField(max_length=255)
-    description = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
-    submitted_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    description = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
     resolved = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.title} ({self.category})"
-
+        return f"{self.user.username} - {self.category}"
