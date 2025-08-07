@@ -6,11 +6,11 @@ from .models import Agent
 def create_default_agents(sender, **kwargs):
     if sender.name == "agents":
         defaults = [
-            {"name": "Coordinator Agent", "role": "coordinator", "status": "active"},
-            {"name": "Environmental Agent", "role": "environmental", "status": "active"},
-            {"name": "Security Agent", "role": "security", "status": "active"},
+            {"name": "Coordinator Agent", "agent_type": "coordinator", "active": True},
+            {"name": "Environmental Agent", "agent_type": "environmental", "active": True},
+            {"name": "Security Agent", "agent_type": "security", "active": True},
         ]
         for agent_data in defaults:
             Agent.objects.get_or_create(
-                role=agent_data["role"], defaults=agent_data
+                agent_type=agent_data["agent_type"], defaults=agent_data
             )

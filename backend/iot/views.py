@@ -1,7 +1,7 @@
 from rest_framework import generics
-from .models import SensorData
-from .serializers import SensorDataSerializer
+from .models import SensorReading
+from .serializers import SensorReadingSerializer
 
-class SensorDataListCreateView(generics.ListCreateAPIView):
-    queryset = SensorData.objects.all()
-    serializer_class = SensorDataSerializer
+class SensorReadingListCreateView(generics.ListCreateAPIView):
+    queryset = SensorReading.objects.all().order_by('-timestamp')
+    serializer_class = SensorReadingSerializer

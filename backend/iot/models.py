@@ -1,21 +1,37 @@
 from django.db import models
 from agents.models import Agent
 
-class SensorData(models.Model):
-    SENSOR_TYPES = [
-        ('temperature', 'Temperature'),
-        ('humidity', 'Humidity'),
-        ('gas', 'Gas Leak'),
+class IoTDevice(models.Model):
+    DEVICE_TYPES = [
+        ('air', 'Air Quality Sensor'),
+        ('traffic', 'Traffic Sensor'),
+        ('infra', 'Infrastructure Sensor'),
+        ('water', 'Water Sensor'),
+        ('gas', 'Gas Leak Detector'),
         ('panic_button', 'Panic Button'),
-        ('motion', 'Motion Sensor'),
         ('camera', 'Camera Feed'),
+        ('motion', 'Motion Sensor'),
     ]
 
-    sensor_type = models.CharField(max_length=50, choices=SENSOR_TYPES)
-    value = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
-    source = models.CharField(max_length=100, blank=True, null=True)
-    handled_by = models.ForeignKey(Agent, on_delete=models.SET_NULL, null=True, blank=True)
+    name = models.CharField(max_length=100)
+    device_type = models.CharField(max_length=50, choices=DEVICE_TYPES)
+    location = models.CharField(max_length=255, blank=True)
+    latitude = models.FloatField()
+    longitude = models.FloatField()
+    installed_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.sensor_type} @ {self.timestamp}"
+        return f"{self.name} ({self.get_device_type_display()})"
+
+
+class SensorReading(models.Model):
+    device = models.ForeignKey(IoTDevice, on_delete=models.CASCADE, related_name="readings")
+    timestamp = models.DateTimeField(auto_now_add=True)
+    value = models.TextField(help_text="Can hold string, float, or JSON")
+    handled_by = models.ForeignKey(Agent, null=True, blank=True, on_delete=models.SET_NULL)
+    is_action_taken = models.BooleanField(default=False)
+    notes = models.TextField(blank=True)
+
+    def __str__(self):
+        return f"{self.device.name} @ {self.timestamp}"
