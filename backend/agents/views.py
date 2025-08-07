@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework import generics
+from .models import Agent
+from .serializers import AgentSerializer
 
-# Create your views here.
+class AgentListCreateView(generics.ListCreateAPIView):
+    queryset = Agent.objects.all()
+    serializer_class = AgentSerializer
