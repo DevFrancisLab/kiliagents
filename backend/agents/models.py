@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Agent(models.Model):
     AGENT_TYPES = [
         ('development', 'Development'),
@@ -17,3 +18,17 @@ class Agent(models.Model):
 
     def __str__(self):
         return f"{self.name} ({self.get_agent_type_display()})"
+
+
+class AgentActivity(models.Model):
+    agent = models.ForeignKey(
+        Agent,
+        on_delete=models.CASCADE,
+        related_name="activities"
+    )
+    timestamp = models.DateTimeField(auto_now_add=True)
+    action = models.TextField()
+
+    def __str__(self):
+        return f"{self.timestamp} - {self.agent.name} ({self.agent.get_agent_type_display()})"
+
