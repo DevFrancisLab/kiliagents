@@ -1,6 +1,4 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { StatusBadge } from "@/components/ui/status-badge"
-import { Progress } from "@/components/ui/progress"
 import { Activity, Zap, Users, Shield, Leaf, Building } from "lucide-react"
 
 const agents = [
@@ -10,8 +8,6 @@ const agents = [
     icon: Building,
     tasks: 12,
     performance: 98,
-    lastAction: "Reviewed building permit #2847",
-    color: "blue",
   },
   {
     name: "Environment Agent",
@@ -19,8 +15,6 @@ const agents = [
     icon: Leaf,
     tasks: 8,
     performance: 95,
-    lastAction: "Air quality alert issued for Kindaruma Rd",
-    color: "green",
   },
   {
     name: "Social Cohesion Agent",
@@ -28,8 +22,6 @@ const agents = [
     icon: Users,
     tasks: 15,
     performance: 92,
-    lastAction: "Facilitated community meeting",
-    color: "purple",
   },
   {
     name: "SME Support Agent",
@@ -37,8 +29,6 @@ const agents = [
     icon: Zap,
     tasks: 0,
     performance: 0,
-    lastAction: "System update in progress",
-    color: "orange",
   },
   {
     name: "Safety Agent",
@@ -46,54 +36,39 @@ const agents = [
     icon: Shield,
     tasks: 6,
     performance: 97,
-    lastAction: "Emergency response coordinated",
-    color: "red",
   },
 ]
 
 export function AgentStatusGrid() {
   return (
-    <div className="space-y-6">
-      <div className="flex items-center gap-2">
-        <Activity className="h-5 w-5 text-blue-600" />
-        <h2 className="text-2xl font-bold text-gray-900">Agent Network Status</h2>
+    <div className="bg-white rounded-lg shadow-sm border">
+      <div className="p-4 border-b">
+        <h3 className="text-lg font-semibold text-gray-900">Agent Network Status</h3>
+        <p className="text-sm text-gray-600">AI agent performance monitor</p>
       </div>
-
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {agents.map((agent, index) => (
-          <Card key={index} className="hover:shadow-lg transition-all duration-200">
-            <CardHeader className="pb-3">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <div className={`p-2 rounded-lg bg-${agent.color}-100`}>
-                    <agent.icon className={`h-5 w-5 text-${agent.color}-600`} />
-                  </div>
-                  <div>
-                    <CardTitle className="text-lg">{agent.name}</CardTitle>
-                  </div>
+      
+      <div className="p-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {agents.map((agent, index) => (
+            <div key={index} className="p-3 border rounded-lg hover:shadow-md transition-shadow">
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-6 h-6 bg-blue-100 rounded flex items-center justify-center">
+                  <agent.icon className="h-4 w-4 text-blue-600" />
                 </div>
-                <StatusBadge status={agent.status}>{agent.status}</StatusBadge>
+                <StatusBadge status={agent.status} className="text-xs px-2 py-1">
+                  {agent.status}
+                </StatusBadge>
               </div>
-            </CardHeader>
-
-            <CardContent className="space-y-4">
-              <div className="text-sm text-gray-600">{agent.lastAction}</div>
-
-              <div className="space-y-2">
-                <div className="flex justify-between text-sm">
-                  <span className="text-gray-600">Performance</span>
-                  <span className="font-medium">{agent.performance}%</span>
-                </div>
-                <Progress value={agent.performance} className="h-2" />
+              
+              <h4 className="font-medium text-sm text-gray-900 mb-1">{agent.name}</h4>
+              
+              <div className="flex justify-between text-xs text-gray-600">
+                <span>{agent.tasks} tasks</span>
+                <span>{agent.performance}%</span>
               </div>
-
-              <div className="flex justify-between text-sm">
-                <span className="text-gray-600">Active Tasks</span>
-                <span className="font-medium">{agent.tasks}</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

@@ -1,13 +1,20 @@
 import LiveUpdates from "@/components/dashboard/LiveUpdates";
+import { Activity } from "lucide-react";
 
 export function RecentActivity() {
   return (
-    <div className="space-y-6 h-full flex flex-col">
-      <div className="flex items-center gap-2">
-        <svg className="h-5 w-5 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3" /></svg>
-        <h2 className="text-2xl font-bold text-gray-900">Activity Feed</h2>
+    <div className="p-6">
+      <div className="flex items-center gap-3 mb-4">
+        <div className="w-8 h-8 bg-gradient-to-r from-orange-500 to-amber-500 rounded-lg flex items-center justify-center">
+          <Activity className="h-4 w-4 text-white" />
+        </div>
+        <div>
+          <h3 className="text-lg font-bold text-slate-800">Recent Activity</h3>
+          <p className="text-xs text-slate-600">Live community updates</p>
+        </div>
       </div>
-      <div className="flex-1 overflow-hidden">
+      
+      <div className="overflow-hidden">
         <LiveUpdates />
       </div>
     </div>
