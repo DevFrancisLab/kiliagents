@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Map as MapIcon } from "lucide-react";
+import { Map as MapIcon, MapPin, Camera, Navigation } from "lucide-react";
 import { MapContainer, TileLayer, Marker, Popup, Tooltip, useMapEvents } from 'react-leaflet';
 import { useApi } from '@/hooks/useApi';
 import 'leaflet/dist/leaflet.css';
@@ -112,13 +112,25 @@ export function CommunityMap() {
   return (
     <>
       <Toaster position="top-right" />
-      <Card>
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <CardTitle className="text-lg font-medium">Community Issues Map</CardTitle>
-        <MapIcon className="w-5 h-5 text-gray-400" />
-      </CardHeader>
-      <CardContent>
-        <div className="h-[500px] w-full rounded-lg overflow-hidden relative">
+      <Card className="bg-white/70 backdrop-blur-sm border border-slate-200/60 shadow-xl hover:shadow-2xl transition-all duration-300">
+        <CardHeader className="flex flex-row items-center justify-between pb-4 bg-gradient-to-r from-blue-50/50 to-indigo-50/30 rounded-t-xl border-b border-slate-200/50">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+              <MapIcon className="w-5 h-5 text-white" />
+            </div>
+            <CardTitle className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+              Community Issues Map
+            </CardTitle>
+          </div>
+          <div className="flex items-center gap-2">
+            <div className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium border border-green-200">
+              <Navigation className="w-3 h-3 inline mr-1" />
+              Interactive
+            </div>
+          </div>
+        </CardHeader>
+        <CardContent className="p-6">
+        <div className="h-[500px] w-full rounded-xl overflow-hidden relative shadow-lg border border-slate-200/60">
           <MapContainer center={kilimaniPosition} zoom={15} scrollWheelZoom={true} style={{ height: '100%', width: '100%' }}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -155,72 +167,120 @@ export function CommunityMap() {
             <MapEvents />
           </MapContainer>
           <Dialog open={!!newIssueLocation} onOpenChange={() => setNewIssueLocation(null)}>
-            <DialogContent className="z-[1000] bg-white text-gray-900">
-              <DialogHeader>
-                <DialogTitle>Report a New Issue</DialogTitle>
-                <DialogDescription>
+            <DialogContent className="z-[1000] bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 border-2 border-blue-200/60 shadow-2xl">
+              <DialogHeader className="mb-6 relative">
+                <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 rounded-full -translate-y-2 translate-x-2"></div>
+                <DialogTitle className="flex items-center gap-3 text-xl font-bold">
+                  <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+                    <MapPin className="w-5 h-5 text-white" />
+                  </div>
+                  <span className="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                    Report New Issue
+                  </span>
+                </DialogTitle>
+                <DialogDescription className="text-slate-600 font-medium mt-2 ml-13">
                   {placeName
-                    ? <>Location: <span className="font-medium text-blue-700">{placeName}</span></>
-                    : newIssueLocation && <>Issue at Lat: {newIssueLocation.lat.toFixed(4)}, Lng: {newIssueLocation.lng.toFixed(4)}</>
+                    ? <> <span className="font-semibold text-blue-700">{placeName}</span></>
+                    : newIssueLocation && <> Coordinates: {newIssueLocation.lat.toFixed(4)}, {newIssueLocation.lng.toFixed(4)}</>
                   }
                 </DialogDescription>
               </DialogHeader>
-              <div className="grid gap-4 py-4">
-                <div className="space-y-2">
-                  <Label htmlFor="description">Description</Label>
-                  <Input id="description" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Describe the issue..." />
+              <div className="grid gap-6 py-4">
+                <div className="space-y-3">
+                  <Label htmlFor="description" className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                    📝 Issue Description
+                  </Label>
+                  <Input 
+                    id="description" 
+                    value={description} 
+                    onChange={(e) => setDescription(e.target.value)} 
+                    placeholder="Describe the issue in detail..." 
+                    className="bg-white/80 backdrop-blur-sm border-slate-300/60 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200"
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="category">Category</Label>
+                <div className="space-y-3">
+                  <Label htmlFor="category" className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                    🏷️ Category
+                  </Label>
                   <Select onValueChange={setCategory} value={category}>
-                    <SelectTrigger id="category"><SelectValue placeholder="Select a category" /></SelectTrigger>
-                    <SelectContent position="popper" className="z-[2000] bg-white">
-                      <SelectItem value="development">Development</SelectItem>
-                      <SelectItem value="environment">Environment</SelectItem>
-                      <SelectItem value="social">Social Cohesion</SelectItem>
-                      <SelectItem value="sme">SME Support</SelectItem>
-                      <SelectItem value="safety">Safety</SelectItem>
+                    <SelectTrigger id="category" className="bg-white/80 backdrop-blur-sm border-slate-300/60 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200 transition-all duration-200">
+                      <SelectValue placeholder="Select issue category" />
+                    </SelectTrigger>
+                    <SelectContent position="popper" className="z-[2000] bg-white/95 backdrop-blur-sm border border-slate-200 shadow-xl rounded-lg">
+                      <SelectItem value="development" className="hover:bg-blue-50">🏗️ Development</SelectItem>
+                      <SelectItem value="environment" className="hover:bg-green-50">🌱 Environment</SelectItem>
+                      <SelectItem value="social" className="hover:bg-purple-50">🤝 Social Cohesion</SelectItem>
+                      <SelectItem value="sme" className="hover:bg-orange-50">💼 SME Support</SelectItem>
+                      <SelectItem value="safety" className="hover:bg-red-50">🛡️ Safety</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label>Attach Photo (Optional)</Label>
-                  <div className="flex items-center gap-2">
-                    <Label htmlFor="proof" className="cursor-pointer inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">
-                      Choose File
+                <div className="space-y-3">
+                  <Label className="text-sm font-semibold text-slate-700 flex items-center gap-2">
+                    📸 Photo Evidence (Optional)
+                  </Label>
+                  <div className="flex items-center gap-3">
+                    <Label 
+                      htmlFor="proof" 
+                      className="cursor-pointer inline-flex items-center justify-center gap-2 rounded-lg text-sm font-medium bg-gradient-to-r from-slate-100 to-slate-50 hover:from-slate-200 hover:to-slate-100 border border-slate-300 text-slate-700 h-10 px-4 py-2 transition-all duration-200 hover:shadow-md"
+                    >
+                      <Camera className="w-4 h-4" />
+                      Choose Photo
                     </Label>
-                    <Input id="proof" type="file" accept="image/*" className="hidden" onChange={(e) => {
-                      const file = e.target.files ? e.target.files[0] : null;
-                      setProof(file);
-                      setProofFileName(file ? file.name : 'No file chosen');
-                    }} />
-                    <span className="text-sm text-gray-500">{proofFileName || 'No file chosen'}</span>
+                    <Input 
+                      id="proof" 
+                      type="file" 
+                      accept="image/*" 
+                      className="hidden" 
+                      onChange={(e) => {
+                        const file = e.target.files ? e.target.files[0] : null;
+                        setProof(file);
+                        setProofFileName(file ? file.name : 'No file chosen');
+                      }} 
+                    />
+                    <span className="text-sm text-slate-500 font-medium">{proofFileName || 'No file selected'}</span>
                   </div>
                 </div>
               </div>
-              <DialogFooter>
-                <Button variant="outline" onClick={() => setNewIssueLocation(null)}>Cancel</Button>
-                <Button onClick={handleSubmitNewIssue} className="bg-blue-600 hover:bg-blue-700 text-white">Submit Issue</Button>
+              <DialogFooter className="gap-3 pt-6">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setNewIssueLocation(null)}
+                  className="bg-white/80 backdrop-blur-sm border-slate-300 hover:bg-slate-50 text-slate-700 font-medium transition-all duration-200"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleSubmitNewIssue} 
+                  className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white font-medium shadow-lg hover:shadow-xl transition-all duration-200 px-6"
+                >
+                  Submit Report
+                </Button>
               </DialogFooter>
             </DialogContent>
           </Dialog>
         </div>
-        <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-            <span>Active Issues</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-            <span>In Progress</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-            <span>Resolved</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <div className="w-3 h-3 bg-blue-500 rounded-full"></div>
-            <span>Monitoring</span>
+        <div className="mt-6 p-4 bg-gradient-to-r from-slate-50/80 to-blue-50/40 rounded-xl border border-slate-200/60">
+          <h4 className="text-sm font-semibold text-slate-700 mb-3 flex items-center gap-2">
+            🎯 Issue Status Legend
+          </h4>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+            <div className="flex items-center gap-3 p-2 bg-white/60 rounded-lg border border-red-200/60">
+              <div className="w-4 h-4 bg-gradient-to-r from-red-500 to-red-600 rounded-full shadow-sm"></div>
+              <span className="font-medium text-slate-700">Active Issues</span>
+            </div>
+            <div className="flex items-center gap-3 p-2 bg-white/60 rounded-lg border border-yellow-200/60">
+              <div className="w-4 h-4 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-full shadow-sm"></div>
+              <span className="font-medium text-slate-700">In Progress</span>
+            </div>
+            <div className="flex items-center gap-3 p-2 bg-white/60 rounded-lg border border-green-200/60">
+              <div className="w-4 h-4 bg-gradient-to-r from-green-500 to-emerald-500 rounded-full shadow-sm"></div>
+              <span className="font-medium text-slate-700">Resolved</span>
+            </div>
+            <div className="flex items-center gap-3 p-2 bg-white/60 rounded-lg border border-blue-200/60">
+              <div className="w-4 h-4 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full shadow-sm"></div>
+              <span className="font-medium text-slate-700">Monitoring</span>
+            </div>
           </div>
         </div>
       </CardContent>

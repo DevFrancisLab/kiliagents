@@ -100,56 +100,64 @@ export function FloatingIssueReporter() {
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
         <Button
-          className="fixed bottom-6 right-6 h-14 w-14 rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-300 z-50"
+          className="fixed bottom-6 right-6 h-16 w-16 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 shadow-2xl hover:shadow-3xl transition-all duration-300 z-50 group border-2 border-white/20 backdrop-blur-sm"
           size="icon"
         >
-          <Plus className="h-6 w-6 text-white" />
+          <Plus className="h-7 w-7 text-white group-hover:scale-110 transition-transform duration-200" />
+          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-400/20 to-indigo-400/20 animate-pulse"></div>
         </Button>
       </SheetTrigger>
       
-      <SheetContent className="w-full sm:max-w-md">
-        <SheetHeader className="mb-6">
-          <SheetTitle className="flex items-center gap-2">
-            <Send className="w-5 h-5 text-blue-600" />
-            Report New Issue
+      <SheetContent className="w-full sm:max-w-md bg-gradient-to-br from-white via-blue-50/30 to-indigo-50/20 border-l-2 border-blue-200/60">
+        <SheetHeader className="mb-8 relative">
+          <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 rounded-full -translate-y-4 translate-x-4"></div>
+          <SheetTitle className="flex items-center gap-3 text-xl font-bold">
+            <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+              <Send className="w-5 h-5 text-white" />
+            </div>
+            <span className="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+              Report New Issue
+            </span>
           </SheetTitle>
-          <SheetDescription>
+          <SheetDescription className="text-slate-600 font-medium mt-2">
             Help improve your community by reporting issues that need attention.
           </SheetDescription>
         </SheetHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-slate-700 mb-2 block flex items-center gap-2">
+              <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
               Issue Description
             </label>
             <Textarea
               placeholder="Describe the issue in detail..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="min-h-[100px] resize-none"
+              className="min-h-[120px] resize-none bg-white/80 backdrop-blur-sm border-slate-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl shadow-sm"
               required
             />
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-slate-700 mb-2 block flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
               Category
             </label>
             <Select onValueChange={setCategory} value={category} required>
-              <SelectTrigger>
+              <SelectTrigger className="bg-white/80 backdrop-blur-sm border-slate-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/20 rounded-xl shadow-sm h-12">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="bg-white/95 backdrop-blur-sm border-slate-200 rounded-xl shadow-xl">
                 {CATEGORIES.map(cat => {
                   const details = CATEGORY_DETAILS[cat as keyof typeof CATEGORY_DETAILS];
                   return (
-                    <SelectItem key={cat} value={cat}>
-                      <div className="flex items-center gap-2">
-                        <div className={`w-4 h-4 ${details.color} rounded flex items-center justify-center text-white`}>
+                    <SelectItem key={cat} value={cat} className="rounded-lg hover:bg-blue-50 focus:bg-blue-50">
+                      <div className="flex items-center gap-3">
+                        <div className={`w-6 h-6 ${details.color} rounded-lg flex items-center justify-center text-white shadow-sm`}>
                           {details.icon}
                         </div>
-                        <span>{cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
+                        <span className="font-medium">{cat.charAt(0).toUpperCase() + cat.slice(1)}</span>
                       </div>
                     </SelectItem>
                   );
@@ -158,8 +166,9 @@ export function FloatingIssueReporter() {
             </Select>
           </div>
 
-          <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
+          <div className="space-y-3">
+            <label className="text-sm font-semibold text-slate-700 mb-2 block flex items-center gap-2">
+              <div className="w-2 h-2 bg-purple-500 rounded-full"></div>
               Location
             </label>
             <Button
@@ -167,22 +176,22 @@ export function FloatingIssueReporter() {
               variant="outline"
               onClick={handleGetLocation}
               disabled={isLocating}
-              className="w-full justify-start"
+              className="w-full justify-start h-12 bg-white/80 backdrop-blur-sm border-slate-200 hover:bg-white hover:border-blue-400 rounded-xl shadow-sm transition-all duration-200"
             >
               {isLocating ? (
                 <>
-                  <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                  Getting location...
+                  <Loader2 className="h-5 w-5 mr-3 animate-spin text-blue-600" />
+                  <span className="font-medium">Getting location...</span>
                 </>
               ) : location ? (
                 <>
-                  <CheckCircle2 className="h-4 w-4 mr-2 text-green-600" />
-                  <span className="truncate">{location.name}</span>
+                  <CheckCircle2 className="h-5 w-5 mr-3 text-green-600" />
+                  <span className="truncate font-medium">{location.name}</span>
                 </>
               ) : (
                 <>
-                  <MapPin className="h-4 w-4 mr-2" />
-                  Get Current Location
+                  <MapPin className="h-5 w-5 mr-3 text-slate-600" />
+                  <span className="font-medium">Get Current Location</span>
                 </>
               )}
             </Button>
@@ -191,17 +200,17 @@ export function FloatingIssueReporter() {
           <Button 
             type="submit" 
             disabled={isSubmitting || !description || !category || !location} 
-            className="w-full"
+            className="w-full h-12 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 font-semibold"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Submitting...
+                <Loader2 className="mr-3 h-5 w-5 animate-spin" />
+                Submitting Issue...
               </>
             ) : (
               <>
-                <Send className="mr-2 h-4 w-4" />
-                Submit Issue
+                <Send className="mr-3 h-5 w-5" />
+                Submit Issue Report
               </>
             )}
           </Button>

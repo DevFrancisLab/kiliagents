@@ -23,60 +23,81 @@ import { FloatingIssueReporter } from "@/components/dashboard/floating-issue-rep
 export default function DashboardPage() {
   return (
     <DashboardLayout>
-      <div className="space-y-8 p-6 max-w-7xl mx-auto">
-        {/* Modern Header */}
-        <DashboardHeader />
-        
-        {/* Enhanced Metrics Overview */}
-        <div className="space-y-2">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-1 h-8 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full"></div>
-            <h2 className="text-xl font-bold text-slate-800">Community Overview</h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-slate-200 to-transparent"></div>
+      <div className="min-h-screen">
+        {/* Header Section */}
+        <div className="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-slate-200/60 shadow-sm">
+          <div className="max-w-7xl mx-auto px-6 py-4">
+            <DashboardHeader />
           </div>
-          <MetricsOverview />
         </div>
 
-        {/* Main Content Grid - Enhanced Layout */}
-        <div className="grid grid-cols-1 xl:grid-cols-12 gap-8">
-          {/* Left Column - Community Map */}
-          <div className="xl:col-span-8 space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-1 h-8 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full"></div>
-                <h2 className="text-xl font-bold text-slate-800">Community Map</h2>
-                <div className="flex-1 h-px bg-gradient-to-r from-slate-200 to-transparent"></div>
-              </div>
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/60 overflow-hidden hover:shadow-xl transition-all duration-300">
-                <CommunityMap />
+        {/* Main Content */}
+        <div className="max-w-7xl mx-auto px-6 py-8 space-y-12">
+          {/* Metrics Section */}
+          <section className="space-y-6">
+            <div className="flex items-center gap-4">
+              <div className="w-2 h-10 bg-gradient-to-b from-blue-500 to-indigo-600 rounded-full shadow-sm"></div>
+              <div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                  Community Overview
+                </h2>
+                <p className="text-slate-600 text-sm mt-1">Real-time community metrics and insights</p>
               </div>
             </div>
-          </div>
-          
-          {/* Right Column - Activity & Issues */}
-          <div className="xl:col-span-4 space-y-6">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-1 h-8 bg-gradient-to-b from-purple-500 to-violet-600 rounded-full"></div>
-                <h2 className="text-xl font-bold text-slate-800">Live Updates</h2>
-                <div className="flex-1 h-px bg-gradient-to-r from-slate-200 to-transparent"></div>
+            <MetricsOverview />
+          </section>
+
+          {/* Main Dashboard Grid */}
+          <section className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Community Map - Takes 2 columns on large screens */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="w-2 h-10 bg-gradient-to-b from-green-500 to-emerald-600 rounded-full shadow-sm"></div>
+                <div>
+                  <h3 className="text-xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                    Interactive Community Map
+                  </h3>
+                  <p className="text-slate-600 text-sm mt-1">Click anywhere to report issues</p>
+                </div>
               </div>
-              
-              {/* Recent Activity - Enhanced */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/60 hover:shadow-xl transition-all duration-300">
+              <CommunityMap />
+            </div>
+
+            {/* Right Sidebar - Activity & Updates */}
+            <div className="space-y-8">
+              {/* Live Updates Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-2 h-8 bg-gradient-to-b from-purple-500 to-violet-600 rounded-full shadow-sm"></div>
+                  <div>
+                    <h3 className="text-lg font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                      Live Updates
+                    </h3>
+                    <p className="text-slate-600 text-xs mt-1">Real-time community activity</p>
+                  </div>
+                </div>
                 <RecentActivity />
               </div>
-              
-              {/* Issue Tracker - Enhanced */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-lg border border-slate-200/60 hover:shadow-xl transition-all duration-300">
+
+              {/* Issue Tracker Section */}
+              <div className="space-y-4">
+                <div className="flex items-center gap-4">
+                  <div className="w-2 h-8 bg-gradient-to-b from-orange-500 to-red-600 rounded-full shadow-sm"></div>
+                  <div>
+                    <h3 className="text-lg font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                      Recent Issues
+                    </h3>
+                    <p className="text-slate-600 text-xs mt-1">Track community reports</p>
+                  </div>
+                </div>
                 <IssueTracker />
               </div>
             </div>
-          </div>
+          </section>
+
+          {/* Bottom Spacing */}
+          <div className="h-24"></div>
         </div>
-        
-        {/* Bottom spacing for floating elements */}
-        <div className="h-20"></div>
       </div>
       
       {/* Floating Issue Reporter */}

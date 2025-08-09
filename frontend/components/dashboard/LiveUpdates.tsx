@@ -119,40 +119,31 @@ export default function LiveUpdates() {
 
   return (
     <aside
-      className="relative overflow-hidden w-full bg-gradient-to-br from-white via-slate-50 to-blue-50/30 border border-slate-200/60 rounded-2xl shadow-2xl flex flex-col backdrop-blur-sm"
-      style={{ minWidth: 340, height: '600px' }}
+      className="relative overflow-hidden w-full bg-white/60 backdrop-blur-sm border border-slate-200/60 rounded-xl shadow-lg flex flex-col"
+      style={{ minWidth: 340, height: '400px' }}
     >
-      {/* Decorative elements */}
-      <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-purple-400/10 rounded-full -translate-y-16 translate-x-16"></div>
-      <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-emerald-400/10 to-cyan-400/10 rounded-full translate-y-12 -translate-x-12"></div>
+      {/* Subtle decorative elements */}
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-blue-400/5 to-purple-400/5 rounded-full -translate-y-10 translate-x-10"></div>
       
-      {/* Header with enhanced styling */}
-      <div className="relative px-8 py-6 bg-gradient-to-r from-blue-600 via-blue-500 to-indigo-600">
-        <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 to-indigo-600/90 backdrop-blur-sm"></div>
-        <div className="relative">
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-12 h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center shadow-lg">
-              <Activity className="w-6 h-6 text-white" />
-            </div>
-            <div>
-              <h3 className="font-bold text-white text-xl tracking-tight drop-shadow-sm">
-                Live System Updates
-              </h3>
-              <p className="text-blue-100/80 text-sm font-medium">
-                Real-time community reports
-              </p>
-            </div>
+      {/* Simplified header */}
+      <div className="relative px-4 py-3 border-b border-slate-200/60">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+            <Activity className="w-4 h-4 text-white" />
           </div>
-          <div className="flex items-center gap-2 mt-3">
-            <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse shadow-lg shadow-green-400/50"></div>
-            <span className="text-white/90 text-sm font-medium">Active monitoring</span>
-            <div className="ml-auto text-white/70 text-xs">
-              Updates every 5s
-            </div>
+          <div>
+            <h3 className="font-semibold text-slate-800 text-sm">
+              Live Updates
+            </h3>
+            <p className="text-slate-600 text-xs">
+              Real-time community reports
+            </p>
+          </div>
+          <div className="ml-auto flex items-center gap-2">
+            <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+            <span className="text-slate-600 text-xs">Live</span>
           </div>
         </div>
-        {/* Animated border */}
-        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent"></div>
       </div>
 
       {/* Scrollable content area */}
